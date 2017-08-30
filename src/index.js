@@ -128,3 +128,65 @@ function compact(array) {
   })
     return newArray
 }
+
+function uniq(list, isSorted) {
+  let newArray = [];
+  if (isSorted) {
+    let lastElement = list[0]
+    newArray.push(lastElement)
+    for(i = 1; i < list.length; i++) {
+      let element = list[i]
+      if (element !== lastElement) {
+        newArray.push(element)
+        lastElement = element
+      }
+    }
+  } else {
+    for(i = 0; i < list.length; i++) {
+      let element = list[i]
+      if(!newArray.includes(element)) {
+        newArray.push(element)
+      }
+    }
+  }
+  return newArray;
+}
+
+function keys(object) {
+  let arrayOfKeys = [];
+  for(let key in object) {
+    arrayOfKeys.push(key)
+  }
+  return arrayOfKeys
+}
+
+function values(object) {
+  let arrayOfValues = [];
+  for(let key in object) {
+    arrayOfValues.push(object[key])
+  }
+  return arrayOfValues
+}
+
+let fi = (function() {
+  return {
+    each: each,
+    map: map,
+    reduce: reduce,
+    find: find,
+    filter: filter,
+    // sortBy: sortBy,
+    size: size,
+    first: first,
+    last: last,
+    compact: compact,
+    uniq: uniq,
+    keys: keys,
+    values: values,
+    functions: functions
+  }
+})()
+
+function functions(module) {
+  return keys(module)
+}
