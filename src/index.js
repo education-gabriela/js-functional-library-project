@@ -184,7 +184,7 @@ function sortObjectBy(arrayObject, key) {
     let listToBeSorted = sortBy(map(arrayObject, element => element[key]), item => item);
     each(listToBeSorted, keyValue => {
         each(arrayObject, object => {
-            if(object[key] === keyValue) {
+            if (object[key] === keyValue) {
                 newObjectArray.push(object);
             }
         });
@@ -194,11 +194,33 @@ function sortObjectBy(arrayObject, key) {
 
 function sortBy(list, callback) {
     let firstElement = list[0];
-    if(typeof firstElement === "object") {
+    if (typeof firstElement === "object") {
         return sortObjectBy(list, callback);
     } else {
         return sortArrayBy(list, callback)
     }
+}
+
+function flatten(array, shallow = false, newArray = []) {
+    if (shallow) {
+        each(array, element => {
+            if (Array.isArray(element)) {
+                newArray.push(...element)
+            } else {
+                newArray.push(element)
+            }
+        });
+    } else {
+        each(array, element => {
+            if (Array.isArray(element)) {
+                flatten(element, false, newArray);
+            } else {
+                newArray.push(element)
+            }
+        });
+    }
+
+    return newArray;
 }
 
 let fi = (function () {
@@ -213,6 +235,7 @@ let fi = (function () {
         first: first,
         last: last,
         compact: compact,
+        flatten: flatten,
         uniq: uniq,
         keys: keys,
         values: values,
